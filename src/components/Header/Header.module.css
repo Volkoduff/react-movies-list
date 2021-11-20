@@ -1,0 +1,24 @@
+.header-logo {
+    font-size: 30px;
+    letter-spacing: 24px;
+    font-weight: 900;
+    background: #fff;
+    background: linear-gradient(45deg, #0B2349 33%, #0D61BC 66%, #8AA9D6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #0B2349;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px 25px 10px 38px;
+    border: 2px solid;
+    border-image: linear-gradient(20deg, #f92056 38%, #00deff 65%);
+    border-image-slice: 1;
+    box-shadow: 6px 6px 17px -13px #333333bf;
+}
+
+.header-logo__wrap {
+    width: 100%;
+    text-align: center;
+    padding: 40px;
+}
+

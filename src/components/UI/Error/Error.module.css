@@ -1,0 +1,23 @@
+.error-wrap {
+    position: absolute;
+    box-shadow: 0 0 0 2px #ff8383;
+    border-radius: 3px;
+    margin: 10px auto;
+    width: -moz-fit-content;
+    width: fit-content;
+    background: white;
+    padding: 5px 20px;
+    right: 0;
+    left: 0;
+    top: 13px;
+}
+
+.error-wrap__title {
+    margin: 0;
+    padding: 0;
+}
+
+.error-wrap__message {
+    margin: 0;
+    padding: 0;
+}
