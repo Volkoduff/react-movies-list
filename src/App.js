@@ -16,6 +16,8 @@ import { createMovie, getMovies} from "./components/api";
 import MoviesList from "./components/MoviesList";
 import Header from "./components/Header/Header";
 import Modal from "./components/UI/Modal/Modal";
+import Login from "./components/UI/Login";
+import AuthContext from "./components/context/auth-context";
 import Error from "./components/UI/Error/Error";
 import './App.css';
 
@@ -66,13 +68,14 @@ function App() {
     }, [receiveMoviesHandler]);
 
     async function addMovieHandler(movie) {
-        const response = await createMovie(movie);
-        onCancelModalHandler();
-        if (response.ok) {
-            receiveMoviesHandler();
-        } else {
-            setError(true);
-        }
+        debugger
+        // const response = await createMovie(movie);
+        // onCancelModalHandler();
+        // if (response.ok) {
+        //     receiveMoviesHandler();
+        // } else {
+        //     setError(true);
+        // }
     }
 
     let content = movies.length > 0 ? <MoviesList movies={movies}/> : <p>Found no movies.</p>;
@@ -83,32 +86,22 @@ function App() {
     const onLoginHandler = () => setIsLoggedIn(true);
     const onLogoutHandler = () => setIsLoggedIn(false);
 
-    const Authorisation = () => {
-        return (
-            <React.Fragment>
-                <Header/>
-                <Authorisation onLogin={onLoginHandler}/>
-            </React.Fragment>
-        )
-    };
-
-    const AppContent = () => {
-        return <React.Fragment>
-            <Header/>
-            <button onClick={onLogoutHandler}>Log out</button>
-            <button onClick={onOpenModalHandler}>Add movie</button>
-            <section className={"horizontal-section"}>{content}</section>
-            {isModal && <Modal onAddMovie={addMovieHandler} onCancelModal={onCancelModalHandler}/>}
-        </React.Fragment>
-    };
-
     return (
-        <React.Fragment>
+        <AuthContext.Provider  value={{
+            isLoggedIn: isLoggedIn,
+            onLogout: onLogoutHandler,
+            onLogin: onLoginHandler,
+        }}>
             <Header/>
-            <button onClick={onOpenModalHandler}>Add movie</button>
-            <section className={"horizontal-section"}>{content}</section>
+            {!isLoggedIn && <Login />}
+            {isLoggedIn && (
+                <React.Fragment>
+                    <button onClick={onOpenModalHandler}>Add movie</button>
+                    <section className={"horizontal-section"}>{content}</section>
+                </React.Fragment>
+            )}
             {isModal && <Modal onAddMovie={addMovieHandler} onCancelModal={onCancelModalHandler}/>}
-        </React.Fragment>
+        </AuthContext.Provider>
     )
 }
 

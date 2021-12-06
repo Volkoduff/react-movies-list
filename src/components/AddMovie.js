@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import classes from './AddMovie.module.css';
+import Input from "./UI/Input/Input";
 
 function AddMovie(props) {
     const [enteredTitle, setEnteredTitle] = useState('');
@@ -13,12 +13,14 @@ function AddMovie(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        const movie = {
-            title: enteredTitle.value,
-            openingText: enteredText.value,
-            releaseDate: releaseDateRef.current.value,
-        };
-        props.onAddMovie(movie);
+        if (formIsValid) {
+            const movie = {
+                title: enteredTitle.value,
+                openingText: enteredText.value,
+                releaseDate: releaseDateRef.current.value,
+            };
+            props.onAddMovie(movie);
+        }
     };
 
     useEffect(() => {
@@ -49,19 +51,25 @@ function AddMovie(props) {
 
     return (
         <form onSubmit={submitHandler}>
-            <div className={classes.control}>
-                <label htmlFor='title'>Title</label>
-                <input type='text' id='title' className={titleIsValid ? '' : classes['control-invalid']} onChange={onChangeTitleHandler} />
-            </div>
-            <div className={classes.control}>
-                <label htmlFor='opening-text'>Opening Text</label>
-                <input id='opening-text' onChange={onChangeTextHandler} className={textIsValid ? '' : classes['control-invalid']} />
-            </div>
-            <div className={classes.control}>
-                <label htmlFor='date'>Release Date</label>
-                <input type='text' id='date'  ref={releaseDateRef}/>
-            </div>
-            <button type="button" disabled={!formIsValid}>Add Movie</button>
+            <Input
+                id='title'
+                type='text'
+                label='Title'
+                isValid={titleIsValid}
+                onChange={onChangeTitleHandler}/>
+            <Input
+                id='opening-text'
+                type='text'
+                label='Opening Text'
+                isValid={textIsValid}
+                onChange={onChangeTextHandler}/>
+            <Input
+                id='date'
+                type='date'
+                label='Release Date'
+                isValid={textIsValid}
+                onChange={onChangeTextHandler}/>
+            <button type="button" onClick={props.onAddMovie}>Add Movie</button>
         </form>
     );
 }
